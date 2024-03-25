@@ -1,0 +1,176 @@
+/* Google Font Import - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    padding: 10px 14px;
+    background-color: #FFF;
+    border-right: 1px solid #e6e5e5;
+    transition: width 0.5s ease;
+}
+
+nav .logo-name {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+nav .logo-image img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+nav .logo_name {
+    font-size: 22px;
+    font-weight: 600;
+    color: #000;
+}
+
+nav .menu-items {
+    margin-top: 40px;
+}
+
+nav ul {
+    list-style: none;
+}
+
+nav ul li {
+    margin-bottom: 15px;
+}
+
+nav ul li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+    transition: color 0.3s;
+}
+
+nav ul li a i {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+nav ul li a:hover {
+    color: #4DA3FF;
+}
+
+.logout-mode {
+    position: absolute;
+    bottom: 20px;
+}
+
+.logout-mode li {
+    margin-bottom: 15px;
+}
+
+.logout-mode li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #FF0000;
+    transition: color 0.3s;
+}
+
+.logout-mode li a i {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.logout-mode li a:hover {
+    color: #FFF;
+    background-color: #FF0000;
+}
+
+.anonymous-reporting {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 40px;
+    width: 80%; /* Adjust the width as needed */
+    max-width: 600px; /* Limit the maximum width */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.anonymous-reporting .title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.anonymous-reporting .title i {
+    font-size: 24px;
+    color: #4DA3FF;
+    margin-right: 10px;
+}
+
+.anonymous-reporting .title .text {
+    font-size: 24px;
+    font-weight: 500;
+    color: #000;
+}
+
+.report-form label {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #000;
+}
+
+.report-form select,
+.report-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    resize: vertical;
+}
+
+.report-form button {
+    width: 100%;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4DA3FF;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.report-form button:hover {
+    background-color: #0c3ec2;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    background-color: #FFF;
+    text-align: center;
+    border-top: 1px solid #e6e5e5;
+}
