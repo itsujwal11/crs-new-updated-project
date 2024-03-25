@@ -8,28 +8,36 @@ if (isset($_POST['verify'])) {
         isset($_POST['otp1']) && 
         isset($_POST['otp2']) && 
         isset($_POST['otp3']) && 
-        isset($_POST['otp4'])
+        isset($_POST['otp4']) && 
+        isset($_POST['otp5']) && 
+        isset($_POST['otp6'])
     ) {
         $otp_entered .= mysqli_real_escape_string($conn, $_POST['otp1']);
         $otp_entered .= mysqli_real_escape_string($conn, $_POST['otp2']);
         $otp_entered .= mysqli_real_escape_string($conn, $_POST['otp3']);
         $otp_entered .= mysqli_real_escape_string($conn, $_POST['otp4']);
+        $otp_entered .= mysqli_real_escape_string($conn, $_POST['otp5']);
+        $otp_entered .= mysqli_real_escape_string($conn, $_POST['otp6']);
     }
     
     $email = $_SESSION['register_email'];
 
     // Retrieve the OTP from the database
-    $sql = "SELECT otp_code FROM users WHERE email='$email'";
+    $sql = "SELECT otp_code FROM user WHERE email='$email'";
     $result = mysqli_query($conn, $sql);
     if ($result && mysqli_num_rows($result) == 1) {
         $row = mysqli_fetch_assoc($result);
-        $otp_from_db = $row['otp_code'];
+        $otp_from_db = trim($row['otp_code']); // Trim any leading or trailing whitespaces
+
+        // Debugging
+        echo "Entered OTP: " . $otp_entered . "<br>";
+     //   echo "OTP from DB: " . $otp_from_db . "<br>";
 
         // Validate OTP
         if ($otp_entered == $otp_from_db) {
             // OTP is correct
             // Update user's status as verified in the database
-            $update_sql = "UPDATE users SET verified=1 WHERE email='$email'";
+            $update_sql = "UPDATE user SET verified=1 WHERE email='$email'";
             $update_result = mysqli_query($conn, $update_sql);
 
             if ($update_result) {
@@ -49,6 +57,7 @@ if (isset($_POST['verify'])) {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,13 +69,15 @@ if (isset($_POST['verify'])) {
 <body>
   <div class="form">
     <h2>Verify Your Account</h2>
-    <p>We emailed you the four-digit OTP code. Enter the code below to confirm your email address.</p>
+    <p>We emailed you the six-digit OTP code. Enter the code below to confirm your email address.</p>
     <form action="verify.php" method="post" autocomplete="off">
       <div class="fields-input">
         <input type="text" name="otp1" class="otp_field" maxlength="1" required>
         <input type="text" name="otp2" class="otp_field" maxlength="1" required>
         <input type="text" name="otp3" class="otp_field" maxlength="1" required>
         <input type="text" name="otp4" class="otp_field" maxlength="1" required>
+        <input type="text" name="otp5" class="otp_field" maxlength="1" required>
+        <input type="text" name="otp6" class="otp_field" maxlength="1" required>
       </div>
       <div class="submit">
         <input type="submit" value="Verify Now" class="button" name="verify">

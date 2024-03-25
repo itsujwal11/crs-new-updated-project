@@ -1,54 +1,53 @@
 <?php
-session_start();
-include 'config.php';
-$msg = "";
+$msg = ""; // Initialize $msg variable
 
-if (isset($_POST['submit'])) {
-    $name = mysqli_real_escape_string($conn, $_POST['name']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
-    $confirm_password = mysqli_real_escape_string($conn, $_POST['confirm-password']);
-    $user_type = mysqli_real_escape_string($conn, $_POST['login_type']); // Capture the selected user type (user or admin)
-    
-    // Check if password matches confirm password
-    if ($password === $confirm_password) {
-        // Hash the password
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        
-        // Generate OTP
-        $otp = rand(1000, 9999);
-        $_SESSION['otp'] = $otp;
-        $_SESSION['register_email'] = $email;
+require 'vendor/autoload.php'; // Include PHPMailer autoloader
 
-        // Send OTP to user's email
-        $to = $email;
-        $subject = "Verification OTP";
-        $message = "Your OTP for registration is: $otp";
-        $headers = "From: your@example.com";
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 
-        if (mail($to, $subject, $message, $headers)) {
-            $msg = "<div class='alert alert-success'>An OTP has been sent to your email address. Please verify your email.</div>";
-        } else {
-            $msg = "<div class='alert alert-danger'>Failed to send OTP email. Please check your SMTP settings.</div>";
-        }
-        
-        // Insert user data into database
-        $sql = "INSERT INTO users (name, email, password, user_type, otp_code) VALUES ('$name', '$email', '$hashed_password', '$user_type', '$otp')";
-        $result = mysqli_query($conn, $sql);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Assuming $code contains the OTP
+    $code = mt_rand(100000, 999999); // Generate a random 6-digit OTP
 
-        if ($result) {
-            // Redirect to verification page
-            header('Location: verify.php');
-            exit();
-        } else {
-            $msg = "<div class='alert alert-danger'>Something went wrong during registration. Please try again later.</div>";
-        }
-    } else {
-        $msg = "<div class='alert alert-danger'>Password and Confirm Password do not match.</div>";
+    // Retrieve the email address from the form
+    $email = isset($_POST['email']) ? $_POST['email'] : '';
+
+    $mail = new PHPMailer(true);
+
+    try {
+        $mail->SMTPDebug = SMTP::DEBUG_SERVER; // Enable verbose debug output
+        $mail->isSMTP(); // Send using SMTP
+        $mail->Host = 'smtp.gmail.com'; // Set the SMTP server to send through
+        $mail->SMTPAuth = true; // Enable SMTP authentication
+        $mail->Username = 'khanalbk18@gmail.com'; // SMTP username
+        $mail->Password = 'dvby rvdq jfnf ymby'; // SMTP password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Enable implicit TLS encryption
+        $mail->Port = 465; // TCP port to connect to; use 587 if you have set SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS
+
+        // Recipients
+        $mail->setFrom('khanalbk18@gmail.com');
+        $mail->addAddress($email);
+
+        // Content
+        $mail->isHTML(true); // Set email format to HTML
+        $mail->Subject = 'Crime Reporting System';
+        $mail->Body = 'Your OTP for verification is: <b>' . $code . '</b>';
+
+        $mail->send();
+        $msg = 'Message has been sent';
+
+        // Redirect to verify.php
+        header("Location: verify.php");
+        exit;
+    } catch (Exception $e) {
+        $msg = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
+
+    // You may want to remove this unless you have HTML code surrounding this PHP snippet
 }
 ?>
-<!-- Your HTML registration form goes here -->
+
 
 
 
@@ -99,13 +98,7 @@ if (isset($_POST['submit'])) {
                             <input type="password" class="password" name="password" placeholder="Enter Your Password" required>
                             <input type="password" class="confirm-password" name="confirm-password" placeholder="Enter Your Confirm Password" required>
                             
-                            <div class="input-field">
-                                <select name="login_type" required>
-                                    <option value="" disabled selected>Select Registration Type</option>
-                                    <option value="user">User</option>
-                                    <option value="admin">Admin</option>
-                                </select>
-                            </div>
+                           
 
                             <button name="submit" class="btn" type="submit">Register</button>
                         </form>

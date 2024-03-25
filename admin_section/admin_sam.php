@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!----======== CSS ======== -->
-    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="/admin_section/admin.css"> 
      
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -21,7 +21,7 @@
                <img src="images/logo.png" alt="">
             </div>
 
-            <span class="logo_name">Crime Reporting System</span>
+            <span class="logo_name">CRS</span>
         </div>
 
         <div class="menu-items">
@@ -32,19 +32,16 @@
                 </a></li>
                 <li><a href="report_form.php">
                     <i class="uil uil-files-landscapes"></i>
-                    <span class="link-name">Report Crime</span>
+                    <span class="link-name">Report ID</span>
                 </a></li>
                 <li><a href="view_status.php">
                     <i class="uil uil-chart"></i>
-                    <span class="link-name">View Status</span>
+                    <span class="link-name">Incident Details</span>
                 </a></li>
-                <li><a href="anonymous.php">
-                    <i class="uil uil-thumbs-up"></i>
-                    <span class="link-name">Anonymous Report</span>
-                </a></li>
+          
                 <li><a href="contact.php">
                     <i class="uil uil-comments"></i>
-                    <span class="link-name">Contact us</span>
+                    <span class="link-name">Status</span>
                 </a></li>
              
             </ul>
@@ -80,30 +77,8 @@
                     <span class="text">Dashboard</span>
                 </div>
 
-                <div class="boxes">
-                    <div class="box box1">
-                        <i class="fa-sharp fa-light fa-user"></i>
-                        <span class="text">Total Case Reported</span>
-                        <span class="number">570</span>
-                    </div>
-                    <div class="box box2">
-                      
-                        <span class="text">Total Cases Solved</span>
-                        <span class="number">209</span>
-                    </div>
-                    <div class="box box3">
-                       
-                        <span class="text">Total Pending Cases</span>
-                        <span class="number">358</span>
-                    </div>
                 </div>
             </div>
-
-            <div class="activity">
-                <div class="title">
-                    <i class="uil uil-clock-three"></i>
-                    <span class="text">Recent Activity</span>
-                </div>
 
               
                
@@ -131,8 +106,6 @@ sidebarToggle.addEventListener("click", () => {
 })
 
     </script>
-    <footer>
-        <h1>hello</h1>
-    </footer>
+
 </body>
 </html>
