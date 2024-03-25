@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
         }
         
         // Insert user data into database
-        $sql = "INSERT INTO users (name, email, password, user_type) VALUES ('$name', '$email', '$hashed_password', '$user_type')";
+        $sql = "INSERT INTO users (name, email, password, user_type, otp_code) VALUES ('$name', '$email', '$hashed_password', '$user_type', '$otp')";
         $result = mysqli_query($conn, $sql);
 
         if ($result) {
@@ -48,6 +48,8 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
+<!-- Your HTML registration form goes here -->
+
 
 
 

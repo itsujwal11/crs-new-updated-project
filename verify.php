@@ -1,35 +1,53 @@
 <?php
 session_start();
-
 include 'config.php';
 
 if (isset($_POST['verify'])) {
-  $otp1 = mysqli_real_escape_string($conn, $_POST['otp1']);
-  $otp2 = mysqli_real_escape_string($conn, $_POST['otp2']);
-  $otp3 = mysqli_real_escape_string($conn, $_POST['otp3']);
-  $otp4 = mysqli_real_escape_string($conn, $_POST['otp4']);
-  $otp_code = $otp1 . $otp2 . $otp3 . $otp4;
+    $otp_entered = '';
+    if (
+        isset($_POST['otp1']) && 
+        isset($_POST['otp2']) && 
+        isset($_POST['otp3']) && 
+        isset($_POST['otp4'])
+    ) {
+        $otp_entered .= mysqli_real_escape_string($conn, $_POST['otp1']);
+        $otp_entered .= mysqli_real_escape_string($conn, $_POST['otp2']);
+        $otp_entered .= mysqli_real_escape_string($conn, $_POST['otp3']);
+        $otp_entered .= mysqli_real_escape_string($conn, $_POST['otp4']);
+    }
+    
+    $email = $_SESSION['register_email'];
 
-  if ($_SESSION['otp_code'] === $otp_code) {
-      // OTP is correct, update user's verified status
-      $email = $_SESSION['verify_email'];
-      $update_sql = "UPDATE users SET verified=1 WHERE email='$email'";
-      $update_result = mysqli_query($conn, $update_sql);
+    // Retrieve the OTP from the database
+    $sql = "SELECT otp_code FROM users WHERE email='$email'";
+    $result = mysqli_query($conn, $sql);
+    if ($result && mysqli_num_rows($result) == 1) {
+        $row = mysqli_fetch_assoc($result);
+        $otp_from_db = $row['otp_code'];
 
-      if ($update_result) {
-          // Redirect to verification success page
-          header('Location: verification_success.php');
-          exit();
-      } else {
-          echo "Error updating user's status.";
-      }
-  } else {
-      echo "Invalid OTP code. Please try again.";
-  }
+        // Validate OTP
+        if ($otp_entered == $otp_from_db) {
+            // OTP is correct
+            // Update user's status as verified in the database
+            $update_sql = "UPDATE users SET verified=1 WHERE email='$email'";
+            $update_result = mysqli_query($conn, $update_sql);
+
+            if ($update_result) {
+                // Redirect to verification success page
+                header('Location: verification_success.php');
+                exit();
+            } else {
+                echo "Error updating user's status.";
+            }
+        } else {
+            // Incorrect OTP
+            echo "Invalid OTP. Please try again.";
+        }
+    } else {
+        echo "User not found or multiple users found with the same email.";
+    }
 }
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -58,4 +76,3 @@ if (isset($_POST['verify'])) {
   <script src="js/verify.js"></script>
 </body>
 </html>
-
