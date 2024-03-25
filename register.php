@@ -7,11 +7,13 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve form data
+    $name = isset($_POST['name']) ? $_POST['name'] : '';
+    $email = isset($_POST['email']) ? $_POST['email'] : '';
+    $password = isset($_POST['password']) ? $_POST['password'] : '';
+
     // Assuming $code contains the OTP
     $code = mt_rand(100000, 999999); // Generate a random 6-digit OTP
-
-    // Retrieve the email address from the form
-    $email = isset($_POST['email']) ? $_POST['email'] : '';
 
     $mail = new PHPMailer(true);
 
@@ -37,18 +39,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->send();
         $msg = 'Message has been sent';
 
-        // Redirect to verify.php
+        // Redirect to verify.php with user email, OTP, name, and password
+        session_start();
+        $_SESSION['register_email'] = $email;
+        $_SESSION['otp'] = $code;
+        $_SESSION['register_name'] = $name;
+        $_SESSION['register_password'] = $password;
         header("Location: verify.php");
         exit;
     } catch (Exception $e) {
         $msg = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
-
-    // You may want to remove this unless you have HTML code surrounding this PHP snippet
 }
 ?>
-
-
 
 
 

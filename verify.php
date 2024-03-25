@@ -3,6 +3,7 @@ session_start();
 include 'config.php';
 
 if (isset($_POST['verify'])) {
+    // Concatenate the OTP entered by the user
     $otp_entered = '';
     if (
         isset($_POST['otp1']) && 
@@ -12,50 +13,41 @@ if (isset($_POST['verify'])) {
         isset($_POST['otp5']) && 
         isset($_POST['otp6'])
     ) {
-        $otp_entered .= mysqli_real_escape_string($conn, $_POST['otp1']);
-        $otp_entered .= mysqli_real_escape_string($conn, $_POST['otp2']);
-        $otp_entered .= mysqli_real_escape_string($conn, $_POST['otp3']);
-        $otp_entered .= mysqli_real_escape_string($conn, $_POST['otp4']);
-        $otp_entered .= mysqli_real_escape_string($conn, $_POST['otp5']);
-        $otp_entered .= mysqli_real_escape_string($conn, $_POST['otp6']);
+        $otp_entered .= $_POST['otp1'];
+        $otp_entered .= $_POST['otp2'];
+        $otp_entered .= $_POST['otp3'];
+        $otp_entered .= $_POST['otp4'];
+        $otp_entered .= $_POST['otp5'];
+        $otp_entered .= $_POST['otp6'];
     }
     
     $email = $_SESSION['register_email'];
+    $otp_from_session = $_SESSION['otp'];
+    
+    // Retrieve name and password from the session or form submission
+    $name = isset($_SESSION['register_name']) ? $_SESSION['register_name'] : '';
+    $password = isset($_SESSION['register_password']) ? $_SESSION['register_password'] : '';
 
-    // Retrieve the OTP from the database
-    $sql = "SELECT otp_code FROM user WHERE email='$email'";
-    $result = mysqli_query($conn, $sql);
-    if ($result && mysqli_num_rows($result) == 1) {
-        $row = mysqli_fetch_assoc($result);
-        $otp_from_db = trim($row['otp_code']); // Trim any leading or trailing whitespaces
-
-        // Debugging
-        echo "Entered OTP: " . $otp_entered . "<br>";
-     //   echo "OTP from DB: " . $otp_from_db . "<br>";
-
-        // Validate OTP
-        if ($otp_entered == $otp_from_db) {
-            // OTP is correct
-            // Update user's status as verified in the database
-            $update_sql = "UPDATE user SET verified=1 WHERE email='$email'";
-            $update_result = mysqli_query($conn, $update_sql);
-
-            if ($update_result) {
-                // Redirect to verification success page
-                header('Location: verification_success.php');
-                exit();
-            } else {
-                echo "Error updating user's status.";
-            }
+    // Validate OTP
+    if ($otp_entered == $otp_from_session) {
+        // OTP is correct
+        // Insert user data into the 'profiles' table
+        $insert_sql = "INSERT INTO profiles (name, email, password, verified) VALUES ('$name', '$email', '$password', 1)";
+        if (mysqli_query($conn, $insert_sql)) {
+            // Redirect to verification success page
+            header('Location: verification_success.php');
+            exit();
         } else {
-            // Incorrect OTP
-            echo "Invalid OTP. Please try again.";
+            echo "Error inserting user data: " . mysqli_error($conn);
         }
     } else {
-        echo "User not found or multiple users found with the same email.";
+        // Incorrect OTP
+        echo "Invalid OTP. Please try again.";
     }
 }
 ?>
+
+
 
 
 <!DOCTYPE html>
