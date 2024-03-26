@@ -6,38 +6,41 @@ if (isset($_POST['verify'])) {
     // Concatenate the OTP entered by the user
     $otp_entered = '';
     if (
-        isset($_POST['otp1']) && 
-        isset($_POST['otp2']) && 
-        isset($_POST['otp3']) && 
-        isset($_POST['otp4']) && 
-        isset($_POST['otp5']) && 
-        isset($_POST['otp6'])
+        isset($_POST['otp1']) && isset($_POST['otp2']) && isset($_POST['otp3']) &&
+        isset($_POST['otp4']) && isset($_POST['otp5']) && isset($_POST['otp6'])
     ) {
-        $otp_entered .= $_POST['otp1'];
-        $otp_entered .= $_POST['otp2'];
-        $otp_entered .= $_POST['otp3'];
-        $otp_entered .= $_POST['otp4'];
-        $otp_entered .= $_POST['otp5'];
-        $otp_entered .= $_POST['otp6'];
+        $otp_entered .= $_POST['otp1'] . $_POST['otp2'] . $_POST['otp3'] .
+                        $_POST['otp4'] . $_POST['otp5'] . $_POST['otp6'];
     }
     
-    $email = $_SESSION['register_email'];
-    $otp_from_session = $_SESSION['otp'];
-    
-    // Retrieve name and password from the session or form submission
-    $name = isset($_SESSION['register_name']) ? $_SESSION['register_name'] : '';
-    $password = isset($_SESSION['register_password']) ? $_SESSION['register_password'] : '';
+    // Retrieve email and OTP from the session
+    $email = isset($_SESSION['register_email']) ? $_SESSION['register_email'] : '';
+    $otp_from_session = isset($_SESSION['otp']) ? $_SESSION['otp'] : '';
 
     // Validate OTP
     if ($otp_entered == $otp_from_session) {
         // OTP is correct
+        // Retrieve name and password from the session
+        $name = isset($_SESSION['register_name']) ? $_SESSION['register_name'] : '';
+        $password = isset($_SESSION['register_password']) ? $_SESSION['register_password'] : '';
+
+        // Hash the password
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
         // Insert user data into the 'profiles' table
-        $insert_sql = "INSERT INTO profiles (name, email, password, verified) VALUES ('$name', '$email', '$password', 1)";
+        $insert_sql = "INSERT INTO profiles (name, email, password, verified) VALUES ('$name', '$email', '$hashed_password', 1)";
         if (mysqli_query($conn, $insert_sql)) {
-            // Redirect to verification success page
+            // Registration successful, unset session variables
+            unset($_SESSION['register_email']);
+            unset($_SESSION['register_name']);
+            unset($_SESSION['register_password']);
+            unset($_SESSION['otp']);
+
+            // Redirect to verification success page or dashboard
             header('Location: verification_success.php');
             exit();
         } else {
+            // Error inserting user data
             echo "Error inserting user data: " . mysqli_error($conn);
         }
     } else {
@@ -46,9 +49,6 @@ if (isset($_POST['verify'])) {
     }
 }
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
