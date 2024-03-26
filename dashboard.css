@@ -112,7 +112,8 @@ nav.close li a .link-name{
     border: 2px solid #ff0000; /* Add a border */
     border-radius: 20px; /* Add border radius to make it round */
     background-color: #ff0000; /* Set background color */
-    color: #fff; /* Set text color */
+    color: #fff; 
+    margin-left: 50px;/* Set text color */
     font-size: 16px; /* Set font size */
     font-weight: bold; /* Make the text bold */
     transition: all 0.3s ease; /* Add transition for smooth hover effect */
