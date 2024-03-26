@@ -1,21 +1,42 @@
 <?php
 session_start();
-include 'config.php';
 
-if (isset($_POST['verify'])) {
-    $otp_entered = mysqli_real_escape_string($conn, $_POST['otp']);
+// Assuming $otp_entered is obtained from user input
 
-    // Validate OTP
+// Database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "login";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Store OTP in the database
+$otp = $_SESSION['otp'];
+$sql = "INSERT INTO profiles (otp_code) VALUES ('$otp')";
+if ($conn->query($sql) === TRUE) {
+   
     if ($otp_entered == $_SESSION['otp']) {
-        // OTP is correct
-        // Your logic after OTP verification (e.g., set user as verified)
+        
 
         // Redirect user after successful verification
         header('Location: verification_success.php');
         exit();
     } else {
-        // Incorrect OTP
-        echo "Invalid OTP. Please try again.";
+        // Incorrect OTP logic
+        echo "Incorrect OTP entered.";
+        // You can redirect the user back to the OTP entry page or handle as per your requirement
     }
+} else {
+    // Error storing OTP in database
+    echo "Error: " . $sql . "<br>" . $conn->error;
 }
+
+$conn->close();
 ?>
