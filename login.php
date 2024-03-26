@@ -7,6 +7,9 @@ if (isset($_POST['submit'])) {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
 
+    // Hash the password
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
     // Validate login
     $sql = "SELECT * FROM profiles WHERE email='$email'";
     $result = mysqli_query($conn, $sql);
@@ -15,19 +18,20 @@ if (isset($_POST['submit'])) {
         $user = mysqli_fetch_assoc($result);
         // Verify password
         if (password_verify($password, $user['password'])) {
+            // Password is correct, set session and redirect to dashboard
             $_SESSION['SESSION_EMAIL'] = $email;
             header('Location: ./dashboard.php');
             exit();
         } else {
+            // Password is incorrect
             $msg = "<div class='alert alert-danger'>Incorrect password.</div>";
         }
     } else {
+        // User not found
         $msg = "<div class='alert alert-danger'>User not found.</div>";
     }
 }
 ?>
-
-
 
 
 <!DOCTYPE html>
