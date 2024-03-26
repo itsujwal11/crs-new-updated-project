@@ -39,4 +39,8 @@ if ($conn->query($sql) === TRUE) {
 }
 
 $conn->close();
+<<<<<<< HEAD
 ?>
+=======
+?>
+>>>>>>> ed5b065 (updated)

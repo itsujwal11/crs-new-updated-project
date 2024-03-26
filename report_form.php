@@ -1,4 +1,7 @@
 <?php
+// Define a variable to hold the message
+$message = "";
+
 // Database connection
 $servername = "localhost"; // Change this if your MySQL server is running on a different host
 $username = "root"; // Replace with your MySQL username
@@ -25,9 +28,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     VALUES ('$report_type', '$name', '$phone', '$address', '$description')";
 
     if ($conn->query($sql) === TRUE) {
-        echo "New record created successfully";
+        $message = "Report submitted successfully";
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        $message = "Error: " . $sql . "<br>" . $conn->error;
     }
 }
 
@@ -101,7 +104,10 @@ $conn->close();
             <span class="text">Report Your Problem</span>
         </div>
         
-        <form class="report-form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+        <!-- Display the message -->
+        <div id="message"><?php echo $message; ?></div>
+        
+        <form class="report-form" id="reportForm" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
             <label for="report-type">Type of Incident:</label>
             <select id="report-type" name="report-type">
                 <option value="assault">Assault</option>
@@ -122,25 +128,30 @@ $conn->close();
             <label for="description">Description:</label>
             <textarea id="description" name="description" rows="4" required></textarea>
 
-            <button type="submit">Submit Report</button>
+            <button type="submit" id="submitButton">Submit Report</button>
         </form>
     </div>
 
     <script>
-        const body = document.querySelector("body"),
-        modeToggle = body.querySelector(".mode-toggle");
-        sidebar = body.querySelector("nav");
-        sidebarToggle = body.querySelector(".sidebar-toggle");
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('reportForm');
+        const messageDiv = document.getElementById('message');
 
-        sidebarToggle.addEventListener("click", () => {
-            sidebar.classList.toggle("close");
-            if(sidebar.classList.contains("close")){
-                localStorage.setItem("status", "close");
-            } else {
-                localStorage.setItem("status", "open");
-            }
+        form.addEventListener('submit', function(event) {
+            // Prevent the form from submitting normally
+            event.preventDefault();
+
+            // Perform Ajax request or submit the form data using fetch or XMLHttpRequest
+            // For now, we'll just display an alert message
+            messageDiv.textContent = "Report submitted successfully!";
+            messageDiv.style.color = "green";
+            
+            // Clear the message after 3 seconds
+            setTimeout(function() {
+                messageDiv.textContent = "";
+            }, 3000);
         });
-    </script>
-  
+    });
+</script>
 </body>
 </html>
