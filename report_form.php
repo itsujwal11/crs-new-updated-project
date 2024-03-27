@@ -131,27 +131,32 @@ $conn->close();
             <button type="submit" id="submitButton">Submit Report</button>
         </form>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('reportForm');
-        const messageDiv = document.getElementById('message');
+   document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('reportForm');
+    const messageDiv = document.getElementById('message');
 
-        form.addEventListener('submit', function(event) {
-            // Prevent the form from submitting normally
-            event.preventDefault();
+    form.addEventListener('submit', function(event) {
+        // Prevent the form from submitting normally
+        event.preventDefault();
 
-            // Perform Ajax request or submit the form data using fetch or XMLHttpRequest
-            // For now, we'll just display an alert message
-            messageDiv.textContent = "Report submitted successfully!";
-            messageDiv.style.color = "green";
-            
-            // Clear the message after 3 seconds
-            setTimeout(function() {
-                messageDiv.textContent = "";
-            }, 3000);
+        // Perform Ajax request or submit the form data using fetch or XMLHttpRequest
+        // For now, we'll just display a success message
+        Swal.fire({
+            title: "Good job!",
+            text: "Your report has been submitted successfully!",
+            icon: "success"
         });
+        
+        // Clear the message after 3 seconds
+        setTimeout(function() {
+            messageDiv.textContent = "";
+        }, 3000);
     });
+});
+
 </script>
 </body>
 </html>
