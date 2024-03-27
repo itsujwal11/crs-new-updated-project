@@ -8,6 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <link rel="stylesheet" href="admin_prac.css">
+    <script>
+        function showAlert(message) {
+            alert(message);
+        }
+    </script>
 </head>
 <body>
     <div class="grid-container">
@@ -62,7 +67,8 @@
                           <th>Address</th>
                           <th>Description</th>
                           <th>Submission Date</th>
-                          <th>Action</th> <!-- New column for delete button -->
+                          <th>Verified</th> <!-- New column for verified status -->
+                          <th>Action</th> <!-- New column for toggle button -->
                       </tr>
                   </thead>
                   <tbody>
@@ -96,16 +102,18 @@
                               echo "<td>" . $row['address'] . "</td>";
                               echo "<td>" . $row['description'] . "</td>";
                               echo "<td>" . $row['submission_date'] . "</td>";
-                              // Add delete button
+                              echo "<td>" . $row['verified'] . "</td>"; // Display verified status
+                              // Add toggle button to toggle the status
                               echo "<td>
-                              <form method='post' action='delete_report.php'>
-                                  <input type='hidden' name='report_id' value='" . $row['id'] . "'>
-                                  <button type='submit' name='delete_btn'>Delete</button>
-                              </form>
-                          </td>";
+                                      <form method='post' action='toggle_verification.php' onsubmit='showAlert(\"Verification status toggled successfully\")'>
+                                          <input type='hidden' name='report_id' value='" . $row['id'] . "'>
+                                          <button type='submit' name='toggle_btn'>Toggle</button>
+                                      </form>
+                                  </td>";
+                              echo "</tr>";
                           }
                       } else {
-                          echo "<tr><td colspan='8'>No reported crimes found.</td></tr>";
+                          echo "<tr><td colspan='9'>No reported crimes found.</td></tr>";
                       }
       
                       // Close database connection
@@ -119,4 +127,4 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.5/apexcharts.min.js"></script>
     <script src="script.js"></script>
 </body>
-</html>
+</html
