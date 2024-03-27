@@ -101,7 +101,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <input type="password" class="password" name="password" placeholder="Enter Your Password" required>
                             <input type="password" class="confirm-password" name="confirm-password" placeholder="Enter Your Confirm Password" required>
                             
-                           
+                            <select name="role">
+    <option value="user">User</option>
+    <option value="admin">Admin</option>
+</select>
 
                             <button name="submit" class="btn" type="submit">Register</button>
                         </form>

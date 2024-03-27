@@ -23,7 +23,7 @@ function closeSidebar() {
 const barChartOptions = {
   series: [
     {
-      data: [10, 8, 6, 4, 2],
+      data: [10, 8],
       name: 'Products',
     },
   ],
@@ -35,7 +35,7 @@ const barChartOptions = {
       show: false,
     },
   },
-  colors: ['#2962ff', '#d50000', '#2e7d32', '#ff6d00', '#583cb3'],
+  colors: ['#2e7d32', '#d50000'],
   plotOptions: {
     bar: {
       distributed: true,
@@ -81,7 +81,7 @@ const barChartOptions = {
     theme: 'dark',
   },
   xaxis: {
-    categories: ['Laptop', 'Phone', 'Monitor', 'Headphones', 'Camera'],
+    categories: ['Solved Cases',  'Pending Cases'],
     title: {
       style: {
         color: '#f5f7ff',
@@ -134,12 +134,12 @@ barChart.render();
 const areaChartOptions = {
   series: [
     {
-      name: 'Purchase Orders',
-      data: [31, 40, 28, 51, 42, 109, 100],
+      name: 'Solved Cases',
+      data: [31, 40],
     },
     {
-      name: 'Sales Orders',
-      data: [11, 32, 45, 32, 34, 52, 41],
+      name: 'Pending Cases',
+      data: [11, 32],
     },
   ],
   chart: {
@@ -213,7 +213,7 @@ const areaChartOptions = {
   yaxis: [
     {
       title: {
-        text: 'Purchase Orders',
+        text: 'Solved Cases',
         style: {
           color: '#f5f7ff',
         },
@@ -227,7 +227,7 @@ const areaChartOptions = {
     {
       opposite: true,
       title: {
-        text: 'Sales Orders',
+        text: 'Pending Cases',
         style: {
           color: '#f5f7ff',
         },

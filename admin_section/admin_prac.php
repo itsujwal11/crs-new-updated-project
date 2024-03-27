@@ -33,12 +33,12 @@
             </div>
             <ul class="sidebar-list">
                 <li class="sidebar-list-item">
-                    <a href="#" target="_blank">
+                    <a href="admin_dashboard.php" >
                         <span class="material-icons-outlined">dashboard</span> Dashboard
                     </a>
                 </li>
                 <li class="sidebar-list-item">
-                    <a href="admin_panel.php" target="_blank">
+                    <a href="#" >
                         <span class="material-icons-outlined">groups</span> Reports
                     </a>
                 </li>
