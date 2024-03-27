@@ -148,7 +148,7 @@ $conn->close();
             title: "Good job!",
             text: "Your report has been submitted successfully!",
             icon: "success"
-        });
+        }); 
         
         // Clear the message after 3 seconds
         setTimeout(function() {
