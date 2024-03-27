@@ -1,4 +1,7 @@
 <?php
+// Start PHP session
+session_start();
+
 // Database connection
 $servername = "localhost";
 $username = "root";
@@ -23,17 +26,22 @@ if(isset($_POST['delete_btn'])) {
 
         // Execute the query
         if ($conn->query($sql) === TRUE) {
-            echo "Record deleted successfully";
+            // Set success message in session
+            $_SESSION['success_message'] = "Record deleted successfully";
         } else {
-            echo "Error deleting record: " . $conn->error;
+            $_SESSION['error_message'] = "Error deleting record: " . $conn->error;
         }
     } else {
-        echo "Report ID not provided";
+        $_SESSION['error_message'] = "Report ID not provided";
     }
 } else {
-    echo "Delete button not clicked"; // Debug statement to check if the delete button is clicked
+    $_SESSION['error_message'] = "Delete button not clicked"; // Debug statement to check if the delete button is clicked
 }
 
 // Close database connection
 $conn->close();
+
+// Redirect back to the previous page
+header("Location: {$_SERVER['HTTP_REFERER']}");
+exit();
 ?>

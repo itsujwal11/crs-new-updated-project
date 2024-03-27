@@ -50,6 +50,12 @@
           </li>
         
           <li class="sidebar-list-item">
+            <a href="admin_prac.html" target="_blank">
+              <span class="material-icons-outlined">groups</span> List of Reports
+            </a>
+          </li>
+
+          <li class="sidebar-list-item">
             <a href="admin_panel.php" target="_blank">
               <span class="material-icons-outlined">groups</span> Reports
             </a>
