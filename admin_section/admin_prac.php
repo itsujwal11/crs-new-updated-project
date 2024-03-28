@@ -27,7 +27,7 @@
                 <div class="sidebar-brand">
                     <span class="material-icons-outlined"></span> CRS ADMIN
                 </div>
-                <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+              
             </div>
             <ul class="sidebar-list">
                 <li class="sidebar-list-item">
@@ -45,12 +45,12 @@
         </aside>
 
         <style>
-/* CSS for logout link */
+
 .logout-mode {
     list-style-type: none;
     padding: auto;
-margin: 5px;
-margin-top: 180%;
+    margin: 5px;
+    margin-top: 180%;
 }
 
 .logout-mode li {
@@ -72,8 +72,6 @@ margin-top: 180%;
     background-color: red; /* Background color on hover */
     color: #fff; /* Text color on hover */
 }
-
-
 </style>
 
         <div class="main-content">
@@ -94,6 +92,8 @@ margin-top: 180%;
                             <th>Address</th>
                             <th>Description</th>
                             <th>Submission Date</th>
+                            <th>Image</th> <!-- New column for image -->
+                            <th>Video</th> <!-- New column for video -->
                             <th>Verified</th> <!-- New column for verified status -->
                             <th>Toggle Verification</th> <!-- New column for toggle button -->
                             <th>Action</th> <!-- New column for solve button -->
@@ -132,6 +132,21 @@ margin-top: 180%;
                                 echo "<td>" . $row['address'] . "</td>";
                                 echo "<td>" . $row['description'] . "</td>";
                                 echo "<td>" . $row['submission_date'] . "</td>";
+                                // Display image
+                                if (!empty($row['image'])) {
+                                    echo "<td><img src='" . $row['image'] . "' width='100' height='100'></td>";
+                                } else {
+                                    echo "<td>No image uploaded</td>";
+                                }
+                                // Display video
+                                if (!empty($row['video'])) {
+                                    echo "<td><video width='320' height='240' controls>
+                                                <source src='" . $row['video'] . "' type='video/mp4'>
+                                                Your browser does not support the video tag.
+                                            </video></td>";
+                                } else {
+                                    echo "<td>No video uploaded</td>";
+                                }
                                 echo "<td>" . $row['verified'] . "</td>"; // Display verified status
                                 // Add toggle button to toggle the status
                                 echo "<td>
@@ -159,7 +174,7 @@ margin-top: 180%;
                                 echo "</tr>";
                             }
                         } else {
-                            echo "<tr><td colspan='12'>No reported crimes found.</td></tr>";
+                            echo "<tr><td colspan='14'>No reported crimes found.</td></tr>";
                         }
         
                         // Close database connection

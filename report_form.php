@@ -23,9 +23,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $address = $_POST["address"];
     $description = $_POST["description"];
 
+    // Image upload
+    $target_dir = "uploads/";
+    $target_file = $target_dir . basename($_FILES["image"]["name"]);
+    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+    move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+
+    // Video upload
+    $video_target_dir = "uploads/videos/";
+    $video_target_file = $video_target_dir . basename($_FILES["video"]["name"]);
+    $videoFileType = strtolower(pathinfo($video_target_file, PATHINFO_EXTENSION));
+    move_uploaded_file($_FILES["video"]["tmp_name"], $video_target_file);
+
     // Insert data into the database
-    $sql = "INSERT INTO report_crime (report_type, name, phone, address, description)
-    VALUES ('$report_type', '$name', '$phone', '$address', '$description')";
+    $sql = "INSERT INTO report_crime (report_type, name, phone, address, description, image, video)
+    VALUES ('$report_type', '$name', '$phone', '$address', '$description', '$target_file', '$video_target_file')";
 
     if ($conn->query($sql) === TRUE) {
         $message = "New record created successfully";
@@ -104,7 +116,7 @@ $conn->close();
         <!-- Display the message -->
         <div id="message"><?php echo $message; ?></div>
         
-        <form class="report-form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+        <form class="report-form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
             <label for="report-type">Type of Incident:</label>
             <select id="report-type" name="report-type">
                 <option value="assault">Assault</option>
@@ -124,6 +136,12 @@ $conn->close();
 
             <label for="description">Description:</label>
             <textarea id="description" name="description" rows="4" required></textarea>
+
+            <label for="image">Upload Image:</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+
+            <label for="video">Upload Video:</label>
+            <input type="file" id="video" name="video" accept="video/*" required>
 
             <button type="submit">Submit Report</button>
         </form>

@@ -192,6 +192,8 @@ body {
 
   #sidebar {
     display: none;
+    height: 100%;
+ 
   }
 
   .menu-icon {
