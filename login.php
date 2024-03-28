@@ -7,9 +7,6 @@ if (isset($_POST['submit'])) {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
 
-    // Hash the password
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
     // Validate login
     $sql = "SELECT * FROM profiles WHERE email='$email'";
     $result = mysqli_query($conn, $sql);
@@ -18,9 +15,13 @@ if (isset($_POST['submit'])) {
         $user = mysqli_fetch_assoc($result);
         // Verify password
         if (password_verify($password, $user['password'])) {
-            // Password is correct, set session and redirect to dashboard
+            // Password is correct, set session and redirect based on role
             $_SESSION['SESSION_EMAIL'] = $email;
-            header('Location: ./dashboard.php');
+            if ($user['role'] === 'admin') {
+                header('Location: admin_section/admin_dashboard.php');
+            } else {
+                header('Location: ./dashboard.php');
+            }
             exit();
         } else {
             // Password is incorrect
@@ -77,7 +78,9 @@ if (isset($_POST['submit'])) {
                             <input type="email" class="email" name="email" placeholder="Enter Your Email" required>
                             <input type="password" class="password" name="password" placeholder="Enter Your Password"
                                 style="margin-bottom: 2px;" required>
-                            <p><a href="forgot-password.php" style="margin-bottom: 15px; display: block; text-align: right;">Forgot Password?</a></p>
+                            <p><a href="forgot-password.php"
+                                    style="margin-bottom: 15px; display: block; text-align: right;">Forgot
+                                    Password?</a></p>
                             <button name="submit" class="btn" type="submit">Login</button>
                         </form>
                         <div class="social-icons">

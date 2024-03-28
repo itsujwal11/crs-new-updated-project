@@ -202,7 +202,7 @@ const areaChartOptions = {
     labels: {
       offsetY: 5,
       style: {
-        colors: '#0000FF', // Blue color for x-axis labels
+        colors: '#FFFFFF', // Blue color for x-axis labels
       },
     },
   },

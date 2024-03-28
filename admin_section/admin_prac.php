@@ -20,14 +20,12 @@
             <div class="menu-icon" onclick="openSidebar()">
                 <span class="material-icons-outlined">menu</span>
             </div>
-            <div class="header-left">
-                <span class="material-icons-outlined">search</span>
-            </div>
+           
         </header>
         <aside id="sidebar">
             <div class="sidebar-title">
                 <div class="sidebar-brand">
-                    <span class="material-icons-outlined">shopping_cart</span> STORE
+                    <span class="material-icons-outlined"></span> CRS ADMIN
                 </div>
                 <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
             </div>
@@ -37,18 +35,47 @@
                         <span class="material-icons-outlined">dashboard</span> Dashboard
                     </a>
                 </li>
-                <li class="sidebar-list-item">
-                    <a href="#" >
-                        <span class="material-icons-outlined">groups</span> Reports
-                    </a>
-                </li>
-                <li class="sidebar-list-item">
-                    <a href="#" target="_blank">
-                        <span class="material-icons-outlined">settings</span> Settings
-                    </a>
-                </li>
+                
+                <ul class="logout-mode">
+                <li><a href="../logout.php">
+             
+                    <span class="logout">Logout</span>
+                </a></li>
             </ul>
         </aside>
+
+        <style>
+/* CSS for logout link */
+.logout-mode {
+    list-style-type: none;
+    padding: auto;
+margin: 5px;
+margin-top: 180%;
+}
+
+.logout-mode li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.logout-mode li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 8px 16px; /* Adjust padding as needed */
+    border: 1px solid white; /* Border style */
+    border-radius: 5px; /* Rounded corners */
+    transition: all 0.3s; /* Smooth transition */
+}
+
+.logout-mode li a:hover {
+    background-color: red; /* Background color on hover */
+    color: #fff; /* Text color on hover */
+}
+
+
+</style>
+
         <div class="main-content">
             <div class="header">
                 <h1>Dashboard</h1>
@@ -71,6 +98,7 @@
                             <th>Toggle Verification</th> <!-- New column for toggle button -->
                             <th>Action</th> <!-- New column for solve button -->
                             <th>Solved Cases</th> <!-- New column for displaying solved cases count -->
+                            <th>Delete</th> <!-- New column for delete button -->
                         </tr>
                     </thead>
                     <tbody>
@@ -121,10 +149,17 @@
                                     </td>";
                                 // Display the number of solved cases
                                 echo "<td>" . $row['solved_cases'] . "</td>";
+                                // Add delete button with form
+                                echo "<td>
+                                        <form method='post' action='delete_report.php' onsubmit='return confirm(\"Are you sure you want to delete this report?\")'>
+                                            <input type='hidden' name='report_id' value='" . $row['id'] . "'>
+                                            <button type='submit' name='delete_btn'>Delete</button>
+                                        </form>
+                                    </td>";
                                 echo "</tr>";
                             }
                         } else {
-                            echo "<tr><td colspan='11'>No reported crimes found.</td></tr>";
+                            echo "<tr><td colspan='12'>No reported crimes found.</td></tr>";
                         }
         
                         // Close database connection

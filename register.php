@@ -22,13 +22,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->isSMTP(); // Send using SMTP
         $mail->Host = 'smtp.gmail.com'; // Set the SMTP server to send through
         $mail->SMTPAuth = true; // Enable SMTP authentication
-        $mail->Username = 'khanalbk18@gmail.com'; // SMTP username
-        $mail->Password = 'dvby rvdq jfnf ymby'; // SMTP password
+        $mail->Username = 'crssafenepal@gmail.com'; // SMTP username
+        $mail->Password = 'ydri wqqu pzhh ibzx'; // SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Enable implicit TLS encryption
         $mail->Port = 465; // TCP port to connect to; use 587 if you have set SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS
 
         // Recipients
-        $mail->setFrom('khanalbk18@gmail.com');
+        $mail->setFrom('crssafenepal@gmail.com');
         $mail->addAddress($email);
 
         // Content
@@ -53,39 +53,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="zxx">
-
 <head>
     <title>Login Form - Crime Reporting System</title>
     <!-- Meta tag Keywords -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8" />
-    <meta name="keywords"
-        content="Login Form" />
+    <meta name="keywords" content="Login Form" />
     <!-- //Meta tag Keywords -->
 
     <link href="//fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
     <!--/Style-CSS -->
     <link rel="stylesheet" href="css/register_style.css" type="text/css" media="all" />
     <!--//Style-CSS -->
 
     <script src="https://kit.fontawesome.com/af562a2a63.js" crossorigin="anonymous"></script>
-
 </head>
-
 <body>
-
     <!-- form section start -->
     <section class="w3l-mockup-form">
         <div class="container">
             <!-- /form -->
             <div class="workinghny-form-grid">
                 <div class="main-mockup">
-                
                     <div class="w3l_form align-self">
                         <div class="left_grid_info">
                             <img src="images/image2.svg" alt="">
@@ -100,12 +91,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <input type="email" class="email" name="email" placeholder="Enter Your Email" value="<?php if (isset($_POST['submit'])) { echo $email; } ?>" required>
                             <input type="password" class="password" name="password" placeholder="Enter Your Password" required>
                             <input type="password" class="confirm-password" name="confirm-password" placeholder="Enter Your Confirm Password" required>
-                            
                             <select name="role">
-    <option value="user">User</option>
-    <option value="admin">Admin</option>
-</select>
-
+                                <option value="user">User</option>
+                                <option value="admin">Admin</option>
+                            </select>
                             <button name="submit" class="btn" type="submit">Register</button>
                         </form>
                         <div class="social-icons">
@@ -129,7 +118,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             });
         });
     </script>
-
 </body>
-
 </html>

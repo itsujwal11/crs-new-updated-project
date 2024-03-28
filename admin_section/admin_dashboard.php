@@ -18,14 +18,8 @@
         <div class="menu-icon" onclick="openSidebar()">
             <span class="material-icons-outlined">menu</span>
         </div>
-        <div class="header-left">
-            <span class="material-icons-outlined">search</span>
-        </div>
-        <div class="header-right">
-            <span class="material-icons-outlined">notifications</span>
-            <span class="material-icons-outlined">email</span>
-            <span class="material-icons-outlined">account_circle</span>
-        </div>
+       
+     
     </header>
     <!-- End Header -->
 
@@ -48,19 +42,47 @@
                     <span class="material-icons-outlined">groups</span> List of Reports
                 </a>
             </li>
-            <li class="sidebar-list-item">
-                <a href="admin_panel.php" target="_blank">
-                    <span class="material-icons-outlined">groups</span> Reports
-                </a>
-            </li>
-            <li class="sidebar-list-item">
-                <a href="#" target="_blank">
-                    <span class="material-icons-outlined">settings</span> Settings
-                </a>
-            </li>
+         
+           
         </ul>
+        <ul class="logout-mode">
+                <li><a href="../logout.php">
+             
+                    <span class="logout">Logout</span>
+                </a></li>
+
     </aside>
-    <!-- End Sidebar -->
+<style>
+/* CSS for logout link */
+.logout-mode {
+    list-style-type: none;
+    padding: auto;
+margin: 5px;
+margin-top: 155%;
+}
+
+.logout-mode li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.logout-mode li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 8px 16px; /* Adjust padding as needed */
+    border: 1px solid white; /* Border style */
+    border-radius: 5px; /* Rounded corners */
+    transition: all 0.3s; /* Smooth transition */
+}
+
+.logout-mode li a:hover {
+    background-color: red; /* Background color on hover */
+    color: #fff; /* Text color on hover */
+}
+
+
+</style>
 
     <!-- Main -->
     <main class="main-container">

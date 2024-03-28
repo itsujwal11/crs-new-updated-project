@@ -23,16 +23,6 @@ if ($result_total->num_rows > 0) {
     $total_cases = $row_total["total_cases"];
 }
 
-// Fetch pending cases count
-$sql_pending = "SELECT COUNT(*) AS pending_cases FROM report_crime WHERE status = 'Pending'";
-$result_pending = $conn->query($sql_pending);
-$pending_cases = 0; // Initialize pending cases variable
-
-if ($result_pending->num_rows > 0) {
-    $row_pending = $result_pending->fetch_assoc();
-    $pending_cases = $row_pending["pending_cases"];
-}
-
 // Fetch solved cases count
 $sql_solved = "SELECT COUNT(*) AS solved_cases FROM report_crime WHERE status = 'Solved'";
 $result_solved = $conn->query($sql_solved);
@@ -42,6 +32,9 @@ if ($result_solved->num_rows > 0) {
     $row_solved = $result_solved->fetch_assoc();
     $solved_cases = $row_solved["solved_cases"];
 }
+
+// Calculate pending cases count
+$pending_cases = $total_cases - $solved_cases;
 
 // Close database connection
 $conn->close();
