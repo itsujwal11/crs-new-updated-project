@@ -20,67 +20,61 @@
             <div class="menu-icon" onclick="openSidebar()">
                 <span class="material-icons-outlined">menu</span>
             </div>
-           
         </header>
         <aside id="sidebar">
             <div class="sidebar-title">
                 <div class="sidebar-brand">
                     <span class="material-icons-outlined"></span> CRS ADMIN
                 </div>
-              
             </div>
             <ul class="sidebar-list">
                 <li class="sidebar-list-item">
-                    <a href="admin_dashboard.php" >
+                    <a href="admin_dashboard.php">
                         <span class="material-icons-outlined">dashboard</span> Dashboard
                     </a>
                 </li>
-                
                 <ul class="logout-mode">
-                <li><a href="../logout.php">
-             
-                    <span class="logout">Logout</span>
-                </a></li>
+                    <li><a href="../logout.php">
+                        <span class="logout">Logout</span>
+                    </a></li>
+                </ul>
             </ul>
         </aside>
 
         <style>
+            .logout-mode {
+                list-style-type: none;
+                padding: auto;
+                margin: 5px;
+                margin-top: 180%;
+            }
 
-.logout-mode {
-    list-style-type: none;
-    padding: auto;
-    margin: 5px;
-    margin-top: 180%;
-}
+            .logout-mode li {
+                display: inline-block;
+                margin-right: 10px;
+            }
 
-.logout-mode li {
-    display: inline-block;
-    margin-right: 10px;
-}
+            .logout-mode li a {
+                text-decoration: none;
+                color: white;
+                font-weight: bold;
+                padding: 8px 16px;
+                border: 1px solid white;
+                border-radius: 5px;
+                transition: all 0.3s;
+            }
 
-.logout-mode li a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-    padding: 8px 16px; /* Adjust padding as needed */
-    border: 1px solid white; /* Border style */
-    border-radius: 5px; /* Rounded corners */
-    transition: all 0.3s; /* Smooth transition */
-}
-
-.logout-mode li a:hover {
-    background-color: red; /* Background color on hover */
-    color: #fff; /* Text color on hover */
-}
-</style>
+            .logout-mode li a:hover {
+                background-color: red;
+                color: #fff;
+            }
+        </style>
 
         <div class="main-content">
             <div class="header">
                 <h1>Dashboard</h1>
-                <!-- Add header content or navigation here -->
             </div>
             <div class="container">
-                <!-- Reported Crimes Table -->
                 <h2>Reported Crimes</h2>
                 <table>
                     <thead>
@@ -92,13 +86,13 @@
                             <th>Address</th>
                             <th>Description</th>
                             <th>Submission Date</th>
-                            <th>Image</th> <!-- New column for image -->
-                            <th>Video</th> <!-- New column for video -->
-                            <th>Verified</th> <!-- New column for verified status -->
-                            <th>Toggle Verification</th> <!-- New column for toggle button -->
-                            <th>Action</th> <!-- New column for solve button -->
-                            <th>Solved Cases</th> <!-- New column for displaying solved cases count -->
-                            <th>Delete</th> <!-- New column for delete button -->
+                            <th>Image</th>
+                            <th>Video</th>
+                            <th>Verified</th>
+                            <th>Toggle Verification</th>
+                            <th>Action</th>
+                            <th>Solved Cases</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -109,18 +103,18 @@
                         $username = "root";
                         $password = "";
                         $database = "login";
-        
+
                         $conn = new mysqli($servername, $username, $password, $database);
-        
+
                         // Check connection
                         if ($conn->connect_error) {
                             die("Connection failed: " . $conn->connect_error);
                         }
-        
+
                         // Fetch reported crimes data
                         $sql = "SELECT *, (SELECT COUNT(*) FROM report_crime AS rc2 WHERE rc2.status = 'Solved' AND rc2.id = report_crime.id) AS solved_cases FROM report_crime";
                         $result = $conn->query($sql);
-        
+
                         // Display data in the table
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
@@ -134,7 +128,7 @@
                                 echo "<td>" . $row['submission_date'] . "</td>";
                                 // Display image
                                 if (!empty($row['image'])) {
-                                    echo "<td><img src='" . $row['image'] . "' width='100' height='100'></td>";
+                                    echo "<td><img src='data:image/jpeg;base64," . base64_encode($row['image']) . "' width='100' height='100'></td>";
                                 } else {
                                     echo "<td>No image uploaded</td>";
                                 }
@@ -176,7 +170,7 @@
                         } else {
                             echo "<tr><td colspan='14'>No reported crimes found.</td></tr>";
                         }
-        
+
                         // Close database connection
                         $conn->close();
                         ?>
@@ -184,7 +178,6 @@
                 </table>
             </div>
         </div>
-        
     <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.5/apexcharts.min.js"></script>
     <script src="script.js"></script>
 </body>

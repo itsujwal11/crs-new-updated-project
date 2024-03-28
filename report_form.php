@@ -1,8 +1,8 @@
 <?php
 // Database connection
-$servername = "localhost"; // Change this if your MySQL server is running on a different host
-$username = "root"; // Replace with your MySQL username
-$password = ""; // Replace with your MySQL password
+$servername = "localhost";
+$username = "root";
+$password = "";
 $database = "login";
 
 $conn = new mysqli($servername, $username, $password, $database);
@@ -24,28 +24,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $description = $_POST["description"];
 
     // Image upload
-    $target_dir = "uploads/";
-    $target_file = $target_dir . basename($_FILES["image"]["name"]);
-    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-    move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+    $image = NULL;
+    if (!empty($_FILES["image"]["tmp_name"])) {
+        $image = file_get_contents($_FILES["image"]["tmp_name"]);
+    }
 
     // Video upload
-    $video_target_dir = "uploads/videos/";
-    $video_target_file = $video_target_dir . basename($_FILES["video"]["name"]);
-    $videoFileType = strtolower(pathinfo($video_target_file, PATHINFO_EXTENSION));
-    move_uploaded_file($_FILES["video"]["tmp_name"], $video_target_file);
+    $video = NULL;
+    if (!empty($_FILES["video"]["tmp_name"])) {
+        $video = file_get_contents($_FILES["video"]["tmp_name"]);
+    }
 
     // Insert data into the database
-    $sql = "INSERT INTO report_crime (report_type, name, phone, address, description, image, video)
-    VALUES ('$report_type', '$name', '$phone', '$address', '$description', '$target_file', '$video_target_file')";
+    $stmt = $conn->prepare("INSERT INTO report_crime (report_type, name, phone, address, description, image, video) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssb", $report_type, $name, $phone, $address, $description, $image, $video);
 
-    if ($conn->query($sql) === TRUE) {
+    if ($stmt->execute()) {
         $message = "New record created successfully";
         // JavaScript for SweetAlert notification
         echo '<script>Swal.fire("Success", "Your report has been submitted successfully!", "success");</script>';
     } else {
-        $message = "Error: " . $sql . "<br>" . $conn->error;
+        $message = "Error: " . $stmt->error;
     }
+
+    $stmt->close();
 }
 
 $conn->close();
@@ -138,10 +140,10 @@ $conn->close();
             <textarea id="description" name="description" rows="4" required></textarea>
 
             <label for="image">Upload Image:</label>
-            <input type="file" id="image" name="image" accept="image/*" required>
+            <input type="file" id="image" name="image" accept="image/*" >
 
             <label for="video">Upload Video:</label>
-            <input type="file" id="video" name="video" accept="video/*" required>
+            <input type="file" id="video" name="video" accept="video/*" >
 
             <button type="submit">Submit Report</button>
         </form>
