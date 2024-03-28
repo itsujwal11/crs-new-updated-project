@@ -1,5 +1,4 @@
 // SIDEBAR TOGGLE
-
 let sidebarOpen = false;
 const sidebar = document.getElementById('sidebar');
 
@@ -35,7 +34,7 @@ const barChartOptions = {
       show: false,
     },
   },
-  colors: ['#2e7d32', '#d50000'],
+  colors: ['#008000', '#FF0000'], // Green for Solved Cases, Red for Pending Cases
   plotOptions: {
     bar: {
       distributed: true,
@@ -81,10 +80,10 @@ const barChartOptions = {
     theme: 'dark',
   },
   xaxis: {
-    categories: ['Solved Cases',  'Pending Cases'],
+    categories: ['Solved Cases', 'Pending Cases'],
     title: {
       style: {
-        color: '#f5f7ff',
+        color: '#FF0000', // Red color for x-axis title
       },
     },
     axisBorder: {
@@ -93,7 +92,7 @@ const barChartOptions = {
     },
     axisTicks: {
       show: true,
-      color: '#55596e',
+      color: '#0000FF', // Blue color for x-axis ticks
     },
     labels: {
       style: {
@@ -124,10 +123,7 @@ const barChartOptions = {
   },
 };
 
-const barChart = new ApexCharts(
-  document.querySelector('#bar-chart'),
-  barChartOptions
-);
+const barChart = new ApexCharts(document.querySelector('#bar-chart'), barChartOptions);
 barChart.render();
 
 // AREA CHART
@@ -135,11 +131,11 @@ const areaChartOptions = {
   series: [
     {
       name: 'Solved Cases',
-      data: [31, 40],
+      data: [31, 40], // Placeholder data
     },
     {
       name: 'Pending Cases',
-      data: [11, 32],
+      data: [11, 32], // Placeholder data
     },
   ],
   chart: {
@@ -151,8 +147,8 @@ const areaChartOptions = {
       show: false,
     },
   },
-  colors: ['#00ab57', '#d50000'],
-  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+  colors: ['#008000', '#FF0000'], // Green for Solved Cases, Red for Pending Cases
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'], // Placeholder labels
   dataLabels: {
     enabled: false,
   },
@@ -188,7 +184,7 @@ const areaChartOptions = {
   },
   markers: {
     size: 6,
-    strokeColors: '#1b2635',
+    strokeColors: '#0000FF', // Blue color for markers
     strokeWidth: 3,
   },
   stroke: {
@@ -206,7 +202,7 @@ const areaChartOptions = {
     labels: {
       offsetY: 5,
       style: {
-        colors: '#f5f7ff',
+        colors: '#0000FF', // Blue color for x-axis labels
       },
     },
   },
@@ -246,8 +242,47 @@ const areaChartOptions = {
   },
 };
 
-const areaChart = new ApexCharts(
-  document.querySelector('#area-chart'),
-  areaChartOptions
-);
+const areaChart = new ApexCharts(document.querySelector('#area-chart'), areaChartOptions);
 areaChart.render();
+
+// Function to fetch and update chart data
+function updateChartData() {
+  // Make AJAX request to fetch data
+  fetch('fetch_cases.php')
+    .then(response => response.json())
+    .then(data => {
+      // Update total cases reported
+      document.getElementById('total-cases').innerText = data.total_cases;
+      // Update pending cases
+      document.getElementById('pending-cases').innerText = data.pending_cases;
+      // Update solved cases
+      document.getElementById('solved-cases').innerText = data.solved_cases;
+
+      // Update bar chart data
+      barChart.updateSeries([
+        {
+          name: 'Products', // Change series name if necessary
+          data: [data.solved_cases, data.pending_cases],
+        },
+      ]);
+
+      // Update area chart data (if needed)
+      areaChart.updateSeries([
+        {
+          name: 'Solved Cases',
+          data: [data.solved_cases],
+        },
+        {
+          name: 'Pending Cases',
+          data: [data.pending_cases],
+        },
+      ]);
+    })
+    .catch(error => console.error('Error fetching data:', error));
+}
+
+// Call updateChartData function initially and then set an interval to update data periodically
+updateChartData(); // Initial call
+
+// Set interval to update data every X milliseconds (e.g., every 5 minutes)
+setInterval(updateChartData, 300000); // 300000 milliseconds = 5 minutes

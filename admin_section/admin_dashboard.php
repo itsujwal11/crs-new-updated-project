@@ -1,37 +1,8 @@
-<?php
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "login";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Fetch total cases reported
-$sql = "SELECT COUNT(*) AS total_cases FROM report_crime";
-$result = $conn->query($sql);
-$total_cases = 0; // Initialize total cases variable
-
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $total_cases = $row["total_cases"];
-}
-
-// Close database connection
-$conn->close();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <!-- Montserrat Font -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -103,7 +74,21 @@ $conn->close();
                     <h3>TOTAL CASES REPORTED</h3>
                     <span class="material-icons-outlined">reports</span>
                 </div>
-                <h1><?php echo $total_cases; ?></h1>
+                <h1 id="total-cases"></h1>
+            </div>
+            <div class="card">
+                <div class="card-inner">
+                    <h3>PENDING CASES</h3>
+                    <span class="material-icons-outlined">pending</span>
+                </div>
+                <h1 id="pending-cases"></h1>
+            </div>
+            <div class="card">
+                <div class="card-inner">
+                    <h3>SOLVED CASES</h3>
+                    <span class="material-icons-outlined">done</span>
+                </div>
+                <h1 id="solved-cases"></h1>
             </div>
             <!-- Other cards here -->
         </div>
