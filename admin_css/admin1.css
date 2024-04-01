@@ -1,8 +1,8 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #1d2634;
-  color: #9e9ea4;
+  background-color: #edf3e4;
+  color: #d9d9e9;
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -42,34 +42,26 @@ body {
 #sidebar {
   grid-area: sidebar;
   height: 100%;
-  background-color: #263043;
+  background-color: #181717;
   overflow-y: auto;
   transition: all 0.5s;
   -webkit-transition: all 0.5s;
+
 }
 
-.sidebar-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30px 30px 30px 30px;
-  margin-bottom: 30px;
+
+.sidebar_title{
+  position: relative;
+text-align: center;
 }
 
-.sidebar-title > span {
-  display: none;
-}
-
-.sidebar-brand {
-  margin-top: 15px;
-  font-size: 20px;
-  font-weight: 700;
-}
 
 .sidebar-list {
   padding: 0;
-  margin-top: 15px;
+  margin-top: auto;
+
   list-style-type: none;
+  margin-top: 50px;
 }
 
 .sidebar-list-item {
@@ -84,20 +76,9 @@ body {
 
 .sidebar-list-item > a {
   text-decoration: none;
-  color: #9e9ea4;
+  color: #eaeaff;
 }
 
-.sidebar-responsive {
-  display: inline !important;
-  position: absolute;
-  /*
-    the z-index of the ApexCharts is 11
-    we want the z-index of the sidebar higher so that
-    the charts are not showing over the sidebar 
-    on small screens
-  */
-  z-index: 12 !important;
-}
 
 /* ---------- MAIN ---------- */
 
@@ -114,11 +95,12 @@ body {
 }
 
 .main-cards {
-  display: inline-block;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 20px;
-  margin: 20px 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Distribute the available space into 3 equal parts */
+  gap: 20px; /* Adjust the gap between the cards */
+  margin-bottom: 20px;
 }
+
 
 .card {
   display: flex;
@@ -129,15 +111,18 @@ body {
 }
 
 .card:first-child {
-  background-color: #2962ff;
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 27%, rgba(3,150,214,1) 73%, rgba(0,212,255,1) 100%);
 }
 
 .card:nth-child(2) {
-  background-color: #ff0000;
+  background: rgb(131,58,180);
+  background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
 }
 
 .card:nth-child(3) {
-  background-color: #2e7d32;
+  background: rgb(34,193,195);
+  background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(88,253,45,1) 100%);
 }
 
 .card:nth-child(4) {
@@ -190,6 +175,11 @@ body {
       'main';
   }
 
+  #sidebar {
+    display: none;
+    height: 100%;
+ 
+  }
 
   .menu-icon {
     display: inline;
@@ -223,50 +213,6 @@ body {
   }
 }
 
-/* Table Styles */
-.container {
-  margin-top: 20px;
-position: absolute;
-margin-left: 20px;
-margin-right: 20px;
-
-
-}
-
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-}
-
-table th,
-table td {
-  padding: 12px;
-  border: 1px solid #e0e0e0;
-  text-align: left;
-}
-
-thead {
-  background-color: #263043;
-  color: #ffffff;
-}
 
 
 
-/* Button Styles */
-button {
-  padding: 10px 20px;
-  background-color: #4caf50;
-  color: #ffffff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-button:hover {
-  background-color: #45a049;
-}

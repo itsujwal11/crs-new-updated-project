@@ -9,39 +9,43 @@
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="../css/admin1.css">
+    <link rel="stylesheet" href="../admin_css/admin1.css">
 </head>
 <body>
 <div class="grid-container">
     <!-- Header -->
-    <header class="header">
+
         <div class="menu-icon" onclick="openSidebar()">
             <span class="material-icons-outlined">menu</span>
         </div>
        
      
-    </header>
-    <!-- End Header -->
+  
 
-    <!-- Sidebar -->
     <aside id="sidebar">
-        <div class="sidebar-title">
-            <div class="sidebar-brand">
-                <span class="material-icons-outlined"></span> CRS ADMIN
-            </div>
-        </div>
-
+  <div class="sidebar_title">
+    <h1>CRS ADMIN</h1>
+  </div>
+  
         <ul class="sidebar-list">
             <li class="sidebar-list-item">
                 <a href="#" >
                     <span class="material-icons-outlined">dashboard</span> Dashboard
                 </a>
             </li>
+
+            
             <li class="sidebar-list-item">
-                <a href="admin_prac.php" >
-                    <span class="material-icons-outlined">groups</span> List of Reports
-                </a>
-            </li>
+      <a href="admin_prac.php">
+        <span class="material-icons-outlined">groups</span> 
+        List of Reports
+      </a>
+    </li>
+<li class="sidebar-list-item">
+                    <a href="archive_report.php">
+                        <span class="material-icons-outlined">archive</span> Archived Reports
+                    </a>
+                </li>
          
            
         </ul>
@@ -53,32 +57,32 @@
 
     </aside>
 <style>
-/* CSS for logout link */
+
 .logout-mode {
-    list-style-type: none;
-    padding: auto;
+  list-style-type: none;
+  padding: auto;
 margin: 5px;
 margin-top: 155%;
 }
 
 .logout-mode li {
-    display: inline-block;
-    margin-right: 10px;
+  display: inline-block;
+  margin-right: 10px;
 }
 
 .logout-mode li a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-    padding: 8px 16px; /* Adjust padding as needed */
-    border: 1px solid white; /* Border style */
-    border-radius: 5px; /* Rounded corners */
-    transition: all 0.3s; /* Smooth transition */
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  padding: 8px 16px; /* Adjust padding as needed */
+  border: 1px solid white; /* Border style */
+  border-radius: 5px; /* Rounded corners */
+  transition: all 0.3s; /* Smooth transition */
 }
 
 .logout-mode li a:hover {
-    background-color: red; /* Background color on hover */
-    color: #fff; /* Text color on hover */
+  background-color: red; /* Background color on hover */
+  color: #fff; /* Text color on hover */
 }
 
 
@@ -131,5 +135,7 @@ margin-top: 155%;
 <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.5/apexcharts.min.js"></script>
 <!-- Custom JS -->
 <script src="../js/dash_scripts.js"></script>
+
+
 </body>
 </html>

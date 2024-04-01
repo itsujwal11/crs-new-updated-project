@@ -5,6 +5,7 @@ $username = "root";
 $password = "";
 $database = "login";
 
+// Attempt to establish connection
 $conn = new mysqli($servername, $username, $password, $database);
 
 // Check connection
@@ -17,27 +18,20 @@ $message = "";
 
 // Form submission handling
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Debugging: Check if form data is received
+    var_dump($_POST);
+
+    // Retrieve form data
     $report_type = $_POST["report-type"];
     $name = $_POST["name"];
     $phone = $_POST["phone"];
     $address = $_POST["address"];
     $description = $_POST["description"];
 
-    // Image upload
-    $image = NULL;
-    if (!empty($_FILES["image"]["tmp_name"])) {
-        $image = file_get_contents($_FILES["image"]["tmp_name"]);
-    }
-
-    // Video upload
-    $video = NULL;
-    if (!empty($_FILES["video"]["tmp_name"])) {
-        $video = file_get_contents($_FILES["video"]["tmp_name"]);
-    }
-
     // Insert data into the database
-    $stmt = $conn->prepare("INSERT INTO report_crime (report_type, name, phone, address, description, image, video) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssssb", $report_type, $name, $phone, $address, $description, $image, $video);
+    $sql = "INSERT INTO report_crime (report_type, name, phone, address, description) VALUES (?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssss", $report_type, $name, $phone, $address, $description);
 
     if ($stmt->execute()) {
         $message = "New record created successfully";
@@ -49,6 +43,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $stmt->close();
 }
+
+$conn->close();
+?>
+
+
 
 $conn->close();
 ?>
